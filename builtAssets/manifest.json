@@ -1,0 +1,231 @@
+{
+  "assets": {
+    "chat.js": "chat-b05bb91f1b6420efcd07fa18b2f997d1.js",
+    "client.js": "client-e802e64e7233cbedd6426b843f73ec4c.js",
+    "common.js": "common-bb1d24c9caecb4a07dffbd92a2f5db21.js",
+    "login.js": "login-7837de7d77c06a887aa8ac155b65ffe5.js",
+    "models.js": "models-11146157a7196c4c20604b80f2e39181.js",
+    "transcript.js": "transcript-1220a5e03ed0873f1f31be9f5878d5e5.js",
+    "vendor.js": "vendor-5b9a2bb2f19551857f2c0020dc2e7795.js",
+    "style.css": "style-8dc8edf892836803f025c4197997ae41.css",
+    "vendor.css": "vendor-f5a60d1bd9e76696f088fa97a53737f1.css"
+  },
+  "files": {
+    "chat-a7cfd1a0176e6d3b12cc57ef5f2721bc.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-13T13:34:41.000Z",
+      "size": 79674,
+      "digest": "a7cfd1a0176e6d3b12cc57ef5f2721bc"
+    },
+    "client-c143bc8a80f3662a94dd139551ce11e2.js": {
+      "logical_path": "client.js",
+      "mtime": "2022-06-14T09:28:33.000Z",
+      "size": 16471,
+      "digest": "c143bc8a80f3662a94dd139551ce11e2"
+    },
+    "common-bb1d24c9caecb4a07dffbd92a2f5db21.js": {
+      "logical_path": "common.js",
+      "mtime": "2019-10-03T15:13:48.000Z",
+      "size": 1538,
+      "digest": "bb1d24c9caecb4a07dffbd92a2f5db21"
+    },
+    "login-7837de7d77c06a887aa8ac155b65ffe5.js": {
+      "logical_path": "login.js",
+      "mtime": "2022-06-15T13:38:28.000Z",
+      "size": 13255,
+      "digest": "7837de7d77c06a887aa8ac155b65ffe5"
+    },
+    "models-11146157a7196c4c20604b80f2e39181.js": {
+      "logical_path": "models.js",
+      "mtime": "2019-10-03T15:13:48.000Z",
+      "size": 1161,
+      "digest": "11146157a7196c4c20604b80f2e39181"
+    },
+    "transcript-e41bc8acd648c24c8f837726d6376e48.js": {
+      "logical_path": "transcript.js",
+      "mtime": "2022-06-14T09:17:24.000Z",
+      "size": 60987,
+      "digest": "e41bc8acd648c24c8f837726d6376e48"
+    },
+    "vendor-5b9a2bb2f19551857f2c0020dc2e7795.js": {
+      "logical_path": "vendor.js",
+      "mtime": "2019-10-03T15:13:48.000Z",
+      "size": 1274461,
+      "digest": "5b9a2bb2f19551857f2c0020dc2e7795"
+    },
+    "style-8dc8edf892836803f025c4197997ae41.css": {
+      "logical_path": "style.css",
+      "mtime": "2019-10-03T15:13:48.000Z",
+      "size": 97025,
+      "digest": "8dc8edf892836803f025c4197997ae41"
+    },
+    "vendor-f5a60d1bd9e76696f088fa97a53737f1.css": {
+      "logical_path": "vendor.css",
+      "mtime": "2019-10-03T15:13:48.000Z",
+      "size": 142950,
+      "digest": "f5a60d1bd9e76696f088fa97a53737f1"
+    },
+    "chat-d390cf62a36f4eed862ab469bb3c54c2.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T08:43:56.000Z",
+      "size": 79726,
+      "digest": "d390cf62a36f4eed862ab469bb3c54c2"
+    },
+    "transcript-3cbcd3e30c3a7d8495459170f0c13866.js": {
+      "logical_path": "transcript.js",
+      "mtime": "2022-06-14T08:43:56.000Z",
+      "size": 61039,
+      "digest": "3cbcd3e30c3a7d8495459170f0c13866"
+    },
+    "chat-a98469ba5201ac0a05411482e667a67f.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T08:45:08.000Z",
+      "size": 79715,
+      "digest": "a98469ba5201ac0a05411482e667a67f"
+    },
+    "transcript-ee412407fb61217b953dd6cdc2e2fe59.js": {
+      "logical_path": "transcript.js",
+      "mtime": "2022-06-14T08:45:08.000Z",
+      "size": 61028,
+      "digest": "ee412407fb61217b953dd6cdc2e2fe59"
+    },
+    "chat-f8e5eabb8d7d367e28f5ff147b9dfe30.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:03:17.000Z",
+      "size": 79737,
+      "digest": "f8e5eabb8d7d367e28f5ff147b9dfe30"
+    },
+    "chat-f155bdd786175291c60bc6c6ccf395b8.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:07:56.000Z",
+      "size": 79728,
+      "digest": "f155bdd786175291c60bc6c6ccf395b8"
+    },
+    "transcript-a153e744afc1ce884a25d5909a369cfd.js": {
+      "logical_path": "transcript.js",
+      "mtime": "2022-06-14T09:12:13.000Z",
+      "size": 61040,
+      "digest": "a153e744afc1ce884a25d5909a369cfd"
+    },
+    "chat-18213455af9aedf93a77617c4d8b0843.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:16:13.000Z",
+      "size": 79942,
+      "digest": "18213455af9aedf93a77617c4d8b0843"
+    },
+    "client-81ad4d659893824bca1cfb71072d8be9.js": {
+      "logical_path": "client.js",
+      "mtime": "2022-06-14T09:15:21.000Z",
+      "size": 16636,
+      "digest": "81ad4d659893824bca1cfb71072d8be9"
+    },
+    "transcript-480323943285a27855273238f6c7136a.js": {
+      "logical_path": "transcript.js",
+      "mtime": "2022-06-14T09:16:39.000Z",
+      "size": 61078,
+      "digest": "480323943285a27855273238f6c7136a"
+    },
+    "chat-953d992354548764bbc1b5e4f0d9d7de.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:26:22.000Z",
+      "size": 79974,
+      "digest": "953d992354548764bbc1b5e4f0d9d7de"
+    },
+    "client-69b04929cc3559b057e90c55a0e01b7b.js": {
+      "logical_path": "client.js",
+      "mtime": "2022-06-14T09:24:44.000Z",
+      "size": 16589,
+      "digest": "69b04929cc3559b057e90c55a0e01b7b"
+    },
+    "chat-323bd11bb5665766b2124d9f064a4656.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:33:23.000Z",
+      "size": 79742,
+      "digest": "323bd11bb5665766b2124d9f064a4656"
+    },
+    "transcript-ac510254f476e7141f7b6bd93f2e4be6.js": {
+      "logical_path": "transcript.js",
+      "mtime": "2022-06-14T09:33:33.000Z",
+      "size": 61055,
+      "digest": "ac510254f476e7141f7b6bd93f2e4be6"
+    },
+    "chat-a80fc54b1194702a9b2426667ade9f9b.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:35:17.000Z",
+      "size": 79746,
+      "digest": "a80fc54b1194702a9b2426667ade9f9b"
+    },
+    "transcript-1220a5e03ed0873f1f31be9f5878d5e5.js": {
+      "logical_path": "transcript.js",
+      "mtime": "2022-06-14T09:34:51.000Z",
+      "size": 60988,
+      "digest": "1220a5e03ed0873f1f31be9f5878d5e5"
+    },
+    "chat-3f8cd62b012e0b2d15247855cca22411.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:35:52.000Z",
+      "size": 79737,
+      "digest": "3f8cd62b012e0b2d15247855cca22411"
+    },
+    "chat-823b3da0cb8b873799735e3b72cc7d9f.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:42:56.000Z",
+      "size": 79774,
+      "digest": "823b3da0cb8b873799735e3b72cc7d9f"
+    },
+    "client-9239ac613c19d7265d5469f8ec28ed1a.js": {
+      "logical_path": "client.js",
+      "mtime": "2022-06-14T09:42:56.000Z",
+      "size": 16508,
+      "digest": "9239ac613c19d7265d5469f8ec28ed1a"
+    },
+    "chat-64408b50a2e9b0e308d7e690f39ec5f6.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:43:50.000Z",
+      "size": 79776,
+      "digest": "64408b50a2e9b0e308d7e690f39ec5f6"
+    },
+    "client-e2b759364c4082a2f5df232416db6386.js": {
+      "logical_path": "client.js",
+      "mtime": "2022-06-14T09:43:50.000Z",
+      "size": 16510,
+      "digest": "e2b759364c4082a2f5df232416db6386"
+    },
+    "chat-91ffebb9d1e8de70809e08ca9e547ac7.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:48:20.000Z",
+      "size": 79786,
+      "digest": "91ffebb9d1e8de70809e08ca9e547ac7"
+    },
+    "client-e802e64e7233cbedd6426b843f73ec4c.js": {
+      "logical_path": "client.js",
+      "mtime": "2022-06-14T09:44:27.000Z",
+      "size": 16472,
+      "digest": "e802e64e7233cbedd6426b843f73ec4c"
+    },
+    "chat-954312e41fa265de5354f9c93099816e.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T09:49:28.000Z",
+      "size": 79786,
+      "digest": "954312e41fa265de5354f9c93099816e"
+    },
+    "chat-b05bb91f1b6420efcd07fa18b2f997d1.js": {
+      "logical_path": "chat.js",
+      "mtime": "2022-06-14T10:01:53.000Z",
+      "size": 79750,
+      "digest": "b05bb91f1b6420efcd07fa18b2f997d1"
+    },
+    "login-6de1847fef99d641ff7f915c8b8001aa.js": {
+      "logical_path": "login.js",
+      "mtime": "2022-06-15T12:04:03.000Z",
+      "size": 13284,
+      "digest": "6de1847fef99d641ff7f915c8b8001aa"
+    },
+    "login-bc64a7b6b0a6632d25276b347c825b96.js": {
+      "logical_path": "login.js",
+      "mtime": "2022-06-15T12:04:48.000Z",
+      "size": 13284,
+      "digest": "bc64a7b6b0a6632d25276b347c825b96"
+    }
+  }
+}
