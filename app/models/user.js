@@ -15,6 +15,17 @@ var bcrypt = require('bcryptjs'),
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
+function generate_token(length){
+    //edit the token allowed characters
+    var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890=".split("");
+    var b = [];  
+    for (var i=0; i<length; i++) {
+        var j = (Math.random() * (a.length-1)).toFixed(0);
+        b[i] = a[j];
+    }
+    return b.join("");
+}
+
 var UserSchema = new mongoose.Schema({
     provider: {
         type: String,
@@ -53,7 +64,8 @@ var UserSchema = new mongoose.Schema({
     token: {
         type: String,
         required: false,
-        trim: true
+        trim: true,
+        default:generate_token(100)
     },
     firstName: {
         type: String,

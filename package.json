@@ -1,5 +1,5 @@
 {
-  "name": "lets-chat",
+  "name": "V-Safe",
   "version": "0.4.8",
   "description": "A chat app for small teams.",
   "license": "MIT",
@@ -7,27 +7,14 @@
   "scripts": {
     "grunt": "grunt",
     "start": "node app.js",
-    "stop": "pkill --signal SIGINT letschat",
+    "dev": "nodemon app.js",
+    "stop": "pkill --signal SIGINT V-Safe",
     "test": "eslint ."
   },
   "engine": {
     "node": "0.10.x",
     "npm": "2.1.x"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/sdelements/lets-chat.git"
-  },
-  "author": {
-    "name": "Houssam Haidar",
-    "email": "houssam@sdelements.com"
-  },
-  
-  "keywords": [
-    "chat",
-    "group chat"
-  ],
-  "homepage": "https://github.com/sdelements/lets-chat",
   "dependencies": {
     "async": "^2.0.0",
     "bcryptjs": "^2.3.0",
@@ -68,6 +55,7 @@
     "grunt": "~0.4.5",
     "grunt-bower": "^0.21.2",
     "grunt-bower-task": "~0.4.0",
-    "grunt-cli": "^1.2.0"
+    "grunt-cli": "^1.2.0",
+    "nodemon": "^2.0.20"
   }
 }

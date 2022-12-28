@@ -37,7 +37,7 @@ secrets:
   cookie: secretsauce
 
 files:
-  enable: false
+  enable: true
   provider: local
   maxFileSize: 100000000
   restrictTypes: true
@@ -73,20 +73,23 @@ auth:
     passwordRegex: ^.{8,64}$
 
 private:
-  enable: false
+  enable: true
   roster: online # online / all
-  expire: 360 # false or number of minutes
+  expire: false # false or number of minutes
 
 noRobots: true # Serve robots.txt with disallow
 
 giphy:
-  enable: true
+  enable: false
   rating: pg-13
   limit: 24
   apiKey: dc6zaTOxFJmzC
 
 rooms:
-  private: false
+  private: true
 
 i18n:
   locale: en
+
+Url:
+  hosturl:"https://uvtechzone.com/audit/"

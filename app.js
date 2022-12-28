@@ -4,7 +4,7 @@
 
 'use strict';
 
-process.title = 'letschat';
+process.title = 'V-Safe';
 
 require('colors');
 
@@ -87,7 +87,7 @@ app.use(helmet.ieNoOpen());
 app.use(helmet.noSniff());
 app.use(helmet.xssFilter());
 app.use(helmet.hsts({
-    maxAge: 31536000,
+    maxAge: 3600000 ,
     includeSubdomains: true,
     force: httpsEnabled,
     preload: true
@@ -117,7 +117,7 @@ app.use(require('connect-assets')({
 
 // Public
 app.use('/media', express.static(__dirname + '/media', {
-    maxAge: '364d'
+    maxAge: '2000d'
 }));
 
 app.use(cors())
