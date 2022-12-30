@@ -1,31 +1,34 @@
 <% extends 'base.html' %>
 
-<% block css %><% endblock %>
+    <% block css %>
+        <% endblock %>
 
-<% block js %>
-<$ 'chat' | js | safe $>
-<% endblock %>
+            <% block js %>
+                <$ 'chat' | js | safe $>
+                    <% endblock %>
 
-<% block templates %>
-    <% include 'includes/js/room.html' %>
-    <% include 'includes/js/user.html' %>
-    <% include 'includes/js/file.html' %>
-    <% include 'includes/js/message.html' %>
-    <% include 'includes/js/tab.html' %>
-    <% include 'includes/js/browser-item.html' %>
-    <% include 'includes/js/browser-item-user.html' %>
-    <% include 'includes/js/upload.html' %>
-<% endblock %>
+                        <% block templates %>
+                            <% include 'includes/js/room.html' %>
+                                <% include 'includes/js/user.html' %>
+                                    <% include 'includes/js/file.html' %>
+                                        <% include 'includes/js/message.html' %>
+                                            <% include 'includes/js/tab.html' %>
+                                                <% include 'includes/js/browser-item.html' %>
+                                                    <% include 'includes/js/browser-item-user.html' %>
+                                                        <% include 'includes/js/upload.html' %>
+                                                            <% endblock %>
 
-<% block body %>
-    <div id="lcb-client" class="lcb-client">
-        <div class="lcb-header">
-            <button type="button" class="btn lcb-header-toggle">
-                <i class="fa fa-bars" aria-label="<$ __('Toggle Navigation') $>"></i>
-            </button>
-            <div class="lcb-header-logo">Let's Chat</div>
-        </div>
-        <!-- <section class="lcb-sidebar">
+                                                                <% block body %>
+                                                                    <div id="lcb-client" class="lcb-client">
+                                                                        <div class="lcb-header">
+                                                                            <button type="button"
+                                                                                class="btn lcb-header-toggle"  style=" visibility: hidden;" >
+                                                                                <i class="fa fa-bars"
+                                                                                    aria-label="<$ __('Toggle Navigation') $>"></i>
+                                                                            </button>
+                                                                            <div class="lcb-header-logo">V-Safe</div>
+                                                                        </div>
+                                                                        <!-- <section class="lcb-sidebar">
             <div class="dropdown">
                 <a class="lcb-account-button dropdown-toggle" data-toggle="dropdown" href="3">
                     <img class="lcb-account-button-avatar lcb-avatar" src="https://www.gravatar.com/avatar/<$ account.avatar $>?s=50" />
@@ -89,45 +92,74 @@
                 </ul>
             </div>
         </section> -->
-        <section class="lcb-panes">
-            <div class="lcb-rooms-browser lcb-pane hide" data-id="list">
-                <header class="lcb-room-header">
-                    <div class="lcb-room-meta">
-                        <h2 class="lcb-room-heading lcb-room-heading-loud"><$ __('All Rooms') $></h2>
-                    </div>
-                    <div class="lcb-rooms-browser-filter">
-                        <label class="lcb-rooms-browser-filter-label" for="lcb-rooms-browser-filter-input">
-                            <i class="fa fa-search" aria-label="<$ __('Search') $>"></i>
-                        </label>
-                        <input id="lcb-rooms-browser-filter-input" class="lcb-rooms-browser-filter-input" type="search" autofocus placeholder="<$ __('Find a room...') $>" />
-                    </div>
-                    <div class="lcb-room-header-actions">
-                        <a class="btn btn-success lcb-rooms-browser-new" data-toggle="modal" data-target="#lcb-add-room" href="#!/rooms/add">
-                            <i class="fa fa-plus" aria-label="<$ __('Add Room') $>"></i>
-                        </a>
-                    </div>
-                </header>
-                <header class="lcb-rooms-browser-header hide">
-                    <h2 class="lcb-rooms-browser-heading">
-                        <$ __('All Rooms') $>
-                    </h2>
+                                                                        <section class="lcb-panes">
+                                                                            <div class="lcb-rooms-browser lcb-pane hide"
+                                                                                data-id="list">
+                                                                                <header class="lcb-room-header">
+                                                                                    <div class="lcb-room-meta">
+                                                                                        <h2
+                                                                                            class="lcb-room-heading lcb-room-heading-loud">
+                                                                                            <$ __('All Rooms') $>
+                                                                                        </h2>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="lcb-rooms-browser-filter">
+                                                                                        <label
+                                                                                            class="lcb-rooms-browser-filter-label"
+                                                                                            for="lcb-rooms-browser-filter-input">
+                                                                                            <i class="fa fa-search"
+                                                                                                aria-label="<$ __('Search') $>"></i>
+                                                                                        </label>
+                                                                                        <input
+                                                                                            id="lcb-rooms-browser-filter-input"
+                                                                                            class="lcb-rooms-browser-filter-input"
+                                                                                            type="search" autofocus
+                                                                                            placeholder="<$ __('Find a room...') $>" />
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="lcb-room-header-actions">
+                                                                                        <a class="btn btn-success lcb-rooms-browser-new"
+                                                                                            data-toggle="modal"
+                                                                                            data-target="#lcb-add-room"
+                                                                                            href="#!/rooms/add">
+                                                                                            <i class="fa fa-plus"
+                                                                                                aria-label="<$ __('Add Room') $>"></i>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </header>
+                                                                                <header
+                                                                                    class="lcb-rooms-browser-header hide">
+                                                                                    <h2
+                                                                                        class="lcb-rooms-browser-heading">
+                                                                                        <$ __('All Rooms') $>
+                                                                                    </h2>
 
-                    
-                </header>
-                <ul class="lcb-rooms-list"></ul>
-                <% include 'includes/modals/add-room.html' %>
-                <% include 'includes/modals/password.html' %>
-            </div>
-        </section>
-        <div class="lcb-loading lcb-client-loading">
-            <img class="lcb-loading-indicator" src="./media/img/loading.svg" alt="<$ __('Loading') $>..." />
-        </div>
-        <% include 'includes/modals/notifications.html' %>
-        <% include 'includes/modals/profile.html' %>
-        <% include 'includes/modals/account.html' %>
-        <% include 'includes/modals/xmpp.html' %>
-        <% include 'includes/modals/tokens.html' %>
-        <% include 'includes/modals/upload.html' %>
-        <% include 'includes/modals/giphy.html' %>
-    </div><!-- lcb-client end -->
-<% endblock %>
+
+                                                                                </header>
+                                                                                <ul class="lcb-rooms-list"></ul>
+                                                                                <% include 'includes/modals/add-room.html'
+                                                                                    %>
+                                                                                    <% include 'includes/modals/password.html'
+                                                                                        %>
+                                                                            </div>
+                                                                        </section>
+                                                                        <div class="lcb-loading lcb-client-loading">
+                                                                            <img class="lcb-loading-indicator"
+                                                                                src="./media/img/loading.svg"
+                                                                                alt="<$ __('Loading') $>..." />
+                                                                        </div>
+                                                                        <% include 'includes/modals/notifications.html'
+                                                                            %>
+                                                                            <% include 'includes/modals/profile.html' %>
+                                                                                <% include 'includes/modals/account.html'
+                                                                                    %>
+                                                                                    <% include 'includes/modals/xmpp.html'
+                                                                                        %>
+                                                                                        <% include 'includes/modals/tokens.html'
+                                                                                            %>
+                                                                                            <% include 'includes/modals/upload.html'
+                                                                                                %>
+                                                                                                <% include 'includes/modals/giphy.html'
+                                                                                                    %>
+                                                                    </div><!-- lcb-client end -->
+                                                                    <% endblock %>
