@@ -67,5 +67,13 @@
 	"Who's Here": "Who's Here",
 	"Files": "Files",
 	"Participants": "Participants",
-	"Archive Room": "Archive Room"
+	"Archive Room": "Archive Room",
+	"Sign in": "Sign in",
+	"Username or Email": "Username or Email",
+	"I need an account": "I need an account",
+	"Register": "Register",
+	"I already have an account": "I already have an account",
+	"From Toronto with Love": "From Toronto with Love",
+	"Photos by %s and\n                                                                                Friends": "Photos by %s and\n                                                                                Friends",
+	"Fork me on GitHub": "Fork me on GitHub"
 }
