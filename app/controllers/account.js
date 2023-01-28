@@ -59,8 +59,9 @@ module.exports = function() {
         res.redirect(settings.Url.hosturl+'login.html');
     });
 
-    app.post('/account/login', function(req) {        
-        req.io.route('account:login');
+    app.post('/account/login', function(req) {     
+
+        req.io.route('account:register');
     });
 
     // app.post('/account/register', function(req) {
@@ -220,76 +221,19 @@ module.exports = function() {
         //         });
         //     });
         // },
-        // register: function(req, res) {
-
-        //     if (req.user ||
-        //         !auth.providers.local ||
-        //         !auth.providers.local.enableRegistration) {
-
-        //         return res.status(403).json({
-        //             status: 'error',
-        //             message: 'Permission denied'
-        //         });
-        //     }
-
-        //     var fields = req.body || req.data;
-
-        //     // Sanity check the password
-        //     var passwordConfirm = fields.passwordConfirm || fields.passwordconfirm || fields['password-confirm'];
-
-        //     if (fields.password !== passwordConfirm) {
-        //         return res.status(400).json({
-        //             status: 'error',
-        //             message: 'Password not confirmed'
-        //         });
-        //     }
-
-        //     var data = {
-        //         provider: 'local',
-        //         username: fields.username,
-        //         email: fields.email,
-        //         password: fields.password,
-        //         firstName: fields.firstName || fields.firstname || fields['first-name'],
-        //         lastName: fields.lastName || fields.lastname || fields['last-name'],
-        //         displayName: fields.displayName || fields.displayname || fields['display-name']
-        //     };
-
-        //     core.account.create('local', data, function(err) {
-        //         if (err) {
-        //             var message = 'Sorry, we could not process your request';
-        //             // User already exists
-        //             if (err.code === 11000) {
-        //                 message = 'Email has already been taken';
-        //             }
-        //             // Invalid username
-        //             if (err.errors) {
-        //                 message = _.map(err.errors, function(error) {
-        //                     return error.message;
-        //                 }).join(' ');
-        //             // If all else fails...
-        //             } else {
-        //                 console.error(err);
-        //             }
-        //             // Notify
-        //             return res.status(400).json({
-        //                 status: 'error',
-        //                 message: message
-        //             });
-        //         }
-
-        //         res.status(201).json({
-        //             status: 'success',
-        //             message: 'You\'ve been registered, ' +
-        //                      'please try logging in now!'
-        //         });
-        //     });
-        // },
-        login: function(req, res) {
-            console.log('');
-            
-            var User = mongoose.model('User');
-            User.findOne({ email: req.body.username }, function(err, user) {
-                req.login(user, function(err) {
+        register: function(req, res) {
+        var User = mongoose.model('User');
+        User.findOne({ email: req.body.username }, function(err, user) {
+            req.login(user, function(err) {
+                if (err) {
+                    return res.status(400).json({
+                        status: 'error',
+                        message: 'There were problems logging you in.',
+                        errors: err
+                    });
+                }
+                var temp = req.session.passport;
+                req.session.regenerate(function(err) {
                     if (err) {
                         return res.status(400).json({
                             status: 'error',
@@ -297,77 +241,101 @@ module.exports = function() {
                             errors: err
                         });
                     }
-                    var temp = req.session.passport;
-                    req.session.regenerate(function(err) {
-                        if (err) {
-                            return res.status(400).json({
-                                status: 'error',
-                                message: 'There were problems logging you in.',
-                                errors: err
-                            });
-                        }
-                        req.session.passport = temp;
-                        res.json({
-                            status: 'success',
-                            message: 'Logging you in...'
-                        });
-                        // res.redirect('http://localhost/login-system-php-mysql-main/home.php');
+                    req.session.passport = temp;
+                    // res.json({
+                    //     status: 'success success',
+                    //     message: 'Logging you in...'
+                    // });
+                    res.redirect('/');
 
-                    });
                 });
             });
-            // auth.authenticate(req, function(err, user, info) {
-                // if (err) {
-                //     return res.status(400).json({
-                //         status: 'error',
-                //         message: 'There were problems logging you in.',
-                //         errors: err
-                //     });
-                // }
+        });
+        },
+        // login: function(req, res) {
+        //     console.log('account/login');
+            
+        //     var User = mongoose.model('User');
+        //     User.findOne({ email: req.body.username }, function(err, user) {
+        //         req.login(user, function(err) {
+        //             if (err) {
+        //                 return res.status(400).json({
+        //                     status: 'error',
+        //                     message: 'There were problems logging you in.',
+        //                     errors: err
+        //                 });
+        //             }
+        //             var temp = req.session.passport;
+        //             req.session.regenerate(function(err) {
+        //                 if (err) {
+        //                     return res.status(400).json({
+        //                         status: 'error',
+        //                         message: 'There were problems logging you in.',
+        //                         errors: err
+        //                     });
+        //                 }
+        //                 req.session.passport = temp;
+        //                 res.json({
+        //                     status: 'success',
+        //                     message: 'Logging you in...'
+        //                 });
+        //                 // res.redirect('http://localhost/login-system-php-mysql-main/home.php');
 
-                // if (!user && info && info.locked) {
-                //     return res.status(403).json({
-                //         status: 'error',
-                //         message: info.message || 'Account is locked.'
-                //     });
-                // }
+        //             });
+        //         });
+        //     });
+        //     // auth.authenticate(req, function(err, user, info) {
+        //         // if (err) {
+        //         //     return res.status(400).json({
+        //         //         status: 'error',
+        //         //         message: 'There were problems logging you in.',
+        //         //         errors: err
+        //         //     });
+        //         // }
 
-                // if (!user) {
-                //     return res.status(401).json({
-                //         status: 'error',
-                //         message: info && info.message ||
-                //                  'Incorrect login credentials.'
-                //     });
-                // }
+        //         // if (!user && info && info.locked) {
+        //         //     return res.status(403).json({
+        //         //         status: 'error',
+        //         //         message: info.message || 'Account is locked.'
+        //         //     });
+        //         // }
 
-                // req.login(user, function(err) {
-                //     if (err) {
-                //         return res.status(400).json({
-                //             status: 'error',
-                //             message: 'There were problems logging you in.',
-                //             errors: err
-                //         });
-                //     }
-                //     var temp = req.session.passport;
-                //     req.session.regenerate(function(err) {
-                //         if (err) {
-                //             return res.status(400).json({
-                //                 status: 'error',
-                //                 message: 'There were problems logging you in.',
-                //                 errors: err
-                //             });
-                //         }
-                //         req.session.passport = temp;
-                //         res.json({
-                //             status: 'success',
-                //             message: 'Logging you in...'
-                //         });
-                //         // res.redirect('http://localhost/login-system-php-mysql-main/home.php');
+        //         // if (!user) {
+        //         //     return res.status(401).json({
+        //         //         status: 'error',
+        //         //         message: info && info.message ||
+        //         //                  'Incorrect login credentials.'
+        //         //     });
+        //         // }
 
-                //     });
-                // });
-            // });
-        }
+        //         // req.login(user, function(err) {
+        //         //     if (err) {
+        //         //         return res.status(400).json({
+        //         //             status: 'error',
+        //         //             message: 'There were problems logging you in.',
+        //         //             errors: err
+        //         //         });
+        //         //     }
+        //         //     var temp = req.session.passport;
+        //         //     req.session.regenerate(function(err) {
+        //         //         if (err) {
+        //         //             return res.status(400).json({
+        //         //                 status: 'error',
+        //         //                 message: 'There were problems logging you in.',
+        //         //                 errors: err
+        //         //             });
+        //         //         }
+        //         //         req.session.passport = temp;
+        //         //         res.json({
+        //         //             status: 'success',
+        //         //             message: 'Logging you in...'
+        //         //         });
+        //         //         // res.redirect('http://localhost/login-system-php-mysql-main/home.php');
+
+        //         //     });
+        //         // });
+        //     // });
+        // }
     });
 
 };
