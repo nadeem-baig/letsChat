@@ -11,6 +11,7 @@
             dataType: 'json',
             complete: getLoginCallback($form)
         });
+        return false;
     }
 
     function getLoginCallback($form) {

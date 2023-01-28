@@ -42,24 +42,24 @@ module.exports = function() {
         });
     });
 
-    app.get('/login', function(req, res) {
-        var imagePath = path.resolve('media/img/photos');
-        var images = fs.readdirSync(imagePath);
-        var image = _.chain(images).filter(function(file) {
-            return /\.(gif|jpg|jpeg|png)$/i.test(file);
-        }).sample().value();
-        res.render('login.html', {
-            photo: image,
-            auth: auth.providers
-        });
-    });
+    // app.get('/login', function(req, res) {
+    //     var imagePath = path.resolve('media/img/photos');
+    //     var images = fs.readdirSync(imagePath);
+    //     var image = _.chain(images).filter(function(file) {
+    //         return /\.(gif|jpg|jpeg|png)$/i.test(file);
+    //     }).sample().value();
+    //     res.render('login.html', {
+    //         photo: image,
+    //         auth: auth.providers
+    //     });
+    // });
 
     app.get('/logout', function(req, res ) {
         req.session.destroy();
         res.redirect(settings.Url.hosturl+'login.html');
     });
 
-    app.post('/account/login', function(req) {        
+    app.post('/account/login', function(req) {
         req.io.route('account:login');
     });
 
@@ -285,8 +285,6 @@ module.exports = function() {
         //     });
         // },
         login: function(req, res) {
-            console.log('');
-            
             var User = mongoose.model('User');
             User.findOne({ email: req.body.username }, function(err, user) {
                 req.login(user, function(err) {

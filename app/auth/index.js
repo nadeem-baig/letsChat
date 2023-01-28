@@ -184,12 +184,7 @@ function authenticate() {
     }
 
     checkIfAccountLocked(username, function(locked) {
-        if (locked) {
-            return cb(null, null, {
-                locked: true,
-                message: 'Account is locked.'
-            });
-        }
+
 
         if (settings.auth.throttling &&
             settings.auth.throttling.enable) {
