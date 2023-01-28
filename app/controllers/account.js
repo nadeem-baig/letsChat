@@ -61,7 +61,7 @@ module.exports = function() {
 
     app.post('/account/login', function(req) {     
 
-        req.io.route('account:register');
+        req.io.route('account:applogin');
     });
 
     // app.post('/account/register', function(req) {
@@ -221,7 +221,7 @@ module.exports = function() {
         //         });
         //     });
         // },
-        register: function(req, res) {
+        applogin: function(req, res) {
         var User = mongoose.model('User');
         User.findOne({ email: req.body.username }, function(err, user) {
             req.login(user, function(err) {
@@ -252,90 +252,7 @@ module.exports = function() {
             });
         });
         },
-        // login: function(req, res) {
-        //     console.log('account/login');
-            
-        //     var User = mongoose.model('User');
-        //     User.findOne({ email: req.body.username }, function(err, user) {
-        //         req.login(user, function(err) {
-        //             if (err) {
-        //                 return res.status(400).json({
-        //                     status: 'error',
-        //                     message: 'There were problems logging you in.',
-        //                     errors: err
-        //                 });
-        //             }
-        //             var temp = req.session.passport;
-        //             req.session.regenerate(function(err) {
-        //                 if (err) {
-        //                     return res.status(400).json({
-        //                         status: 'error',
-        //                         message: 'There were problems logging you in.',
-        //                         errors: err
-        //                     });
-        //                 }
-        //                 req.session.passport = temp;
-        //                 res.json({
-        //                     status: 'success',
-        //                     message: 'Logging you in...'
-        //                 });
-        //                 // res.redirect('http://localhost/login-system-php-mysql-main/home.php');
-
-        //             });
-        //         });
-        //     });
-        //     // auth.authenticate(req, function(err, user, info) {
-        //         // if (err) {
-        //         //     return res.status(400).json({
-        //         //         status: 'error',
-        //         //         message: 'There were problems logging you in.',
-        //         //         errors: err
-        //         //     });
-        //         // }
-
-        //         // if (!user && info && info.locked) {
-        //         //     return res.status(403).json({
-        //         //         status: 'error',
-        //         //         message: info.message || 'Account is locked.'
-        //         //     });
-        //         // }
-
-        //         // if (!user) {
-        //         //     return res.status(401).json({
-        //         //         status: 'error',
-        //         //         message: info && info.message ||
-        //         //                  'Incorrect login credentials.'
-        //         //     });
-        //         // }
-
-        //         // req.login(user, function(err) {
-        //         //     if (err) {
-        //         //         return res.status(400).json({
-        //         //             status: 'error',
-        //         //             message: 'There were problems logging you in.',
-        //         //             errors: err
-        //         //         });
-        //         //     }
-        //         //     var temp = req.session.passport;
-        //         //     req.session.regenerate(function(err) {
-        //         //         if (err) {
-        //         //             return res.status(400).json({
-        //         //                 status: 'error',
-        //         //                 message: 'There were problems logging you in.',
-        //         //                 errors: err
-        //         //             });
-        //         //         }
-        //         //         req.session.passport = temp;
-        //         //         res.json({
-        //         //             status: 'success',
-        //         //             message: 'Logging you in...'
-        //         //         });
-        //         //         // res.redirect('http://localhost/login-system-php-mysql-main/home.php');
-
-        //         //     });
-        //         // });
-        //     // });
-        // }
+        
     });
 
 };
