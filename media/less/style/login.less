@@ -4,7 +4,7 @@
 
 .lcb-login {
     background-color: #222;
-    background-image: url('../img/photos/reflection.jpg');
+    // background-image: url('../img/photos/reflection.jpg');
     background-size: cover;
     background-position: center center;
     background-attachment: fixed;
@@ -13,7 +13,7 @@
     .align-items(center);
     .justify-content(center);
     &:before {
-        background-image: url('../img/photo-overlay.png');
+        // background-image: url('../img/photo-overlay.png');
         .size(100%);
         content: '';
         position: fixed;
@@ -24,7 +24,10 @@
 
     @media (max-width: @screen-xs-max) {
         display: block;
-    }
+    };
+    opacity: 0;
+    visibility: hidden;
+    display: none;
 }
 
 .lcb-login-main {
