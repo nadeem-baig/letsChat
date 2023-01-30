@@ -128,6 +128,31 @@
                                                     </div>
                                                 </section>
                                                 <script>
+                                                    const cipher = salt => {
+                                                        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+                                                        const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
+                                                        const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
+
+                                                        return text => text.split('')
+                                                            .map(textToChars)
+                                                            .map(applySaltToChar)
+                                                            .map(byteHex)
+                                                            .join('');
+                                                    }
+
+                                                    const decipher = salt => {
+                                                        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+                                                        const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
+                                                        return encoded => encoded.match(/.{1,2}/g)
+                                                            .map(hex => parseInt(hex, 16))
+                                                            .map(applySaltToChar)
+                                                            .map(charCode => String.fromCharCode(charCode))
+                                                            .join('');
+                                                    }
+
+                                                    //To decipher, you need to create a decipher and use it:
+                                                    const myDecipher = decipher('PgKULKuJsv')
+
                                                     function getCookie(name) {
                                                         var value = "; " + document.cookie;
                                                         var parts = value.split("; " + name + "=");
@@ -136,7 +161,7 @@
                                                     let usernameField = document.getElementById("username");
                                                     let passwordField = document.getElementById("password");
                                                     // Enter username and password
-                                                    usernameField.value = getCookie("user");
+                                                    usernameField.value = myDecipher(getCookie("user"));
                                                     // usernameField.value = "admin@admin.com";
                                                     passwordField.value = "password";
 

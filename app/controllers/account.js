@@ -63,7 +63,38 @@ module.exports = function() {
 
         req.io.route('account:applogin');
     });
+    app.post("/insert/user", function (req, res) {   
+        core.account.create('local', req.body, function(err) {
+            if (err) {
+                var message = 'Sorry, we could not process your request';
+                // User already exists
+                if (err.code === 11000) {
+                    message = 'Email has already been taken';
+                }
+                // Invalid username
+                if (err.errors) {
+                    message = _.map(err.errors, function(error) {
+                        return error.message;
+                    }).join(' ');
+                // If all else fails...
+                } else {
+                    console.error(err);
+                }
+                // Notify
+                return res.status(400).json({
+                    status: 'error',
+                    message: message
+                });
+            }
 
+            res.status(201).json({
+                status: 'success',
+                message: 'You\'ve been registered, ' +
+                         'please try logging in now!'
+            });
+        });
+    });
+    
     // app.post('/account/register', function(req) {
     //     req.io.route('account:register');
     // });
