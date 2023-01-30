@@ -26,14 +26,13 @@ module.exports = function() {
     // Routes
     //
 
-    // app.get('/room/:roomid', middlewares.requireLogin.redirect, function(req, res) {
-    //     console.log(req.url);    
-    //     res.render('chat.html', {
-    //         account: req.user,
-    //         settings: settings,
-    //         version: psjon.version
-    //     });
-    // });
+    app.get('/room/:roomid', middlewares.requireLogin.redirect, function(req, res) {
+        res.render('chat.html', {
+            account: req.user,
+            settings: settings,
+            version: psjon.version
+        });
+    });
     app.get('/', middlewares.requireLogin.redirect, function(req, res) {
         res.render('chat.html', {
             account: req.user,
@@ -253,6 +252,23 @@ module.exports = function() {
             });
         },
         applogin: function(req, res) {
+            function getCookie(name) {
+                var value = "; " + req.headers.cookie;
+                var parts = value.split("; " + name + "=");
+                if (parts.length == 2) return parts.pop().split(";").shift();
+            }
+            const decipher = salt => {
+                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+                const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
+                return encoded => encoded.match(/.{1,2}/g)
+                    .map(hex => parseInt(hex, 16))
+                    .map(applySaltToChar)
+                    .map(charCode => String.fromCharCode(charCode))
+                    .join('');
+            }
+
+            //To decipher, you need to create a decipher and use it:
+            const myDecipher = decipher('PgKULKuJsv')
         var User = mongoose.model('User');
         User.findOne({ email: req.body.username }, function(err, user) {
             req.login(user, function(err) {
@@ -277,7 +293,7 @@ module.exports = function() {
                     //     status: 'success success',
                     //     message: 'Logging you in...'
                     // });
-                    res.redirect('/');
+                    res.redirect('/#!/room/'+myDecipher(getCookie("id")));
 
                 });
             });
