@@ -111,13 +111,13 @@ module.exports = function() {
     //     req.io.route('account:settings');
     // });
 
-    // app.post('/account/token/generate', middlewares.requireLogin, function(req) {
-    //     req.io.route('account:generate_token');
-    // });
+    app.post('/account/token/generate', middlewares.requireLogin, function(req) {
+        req.io.route('account:generate_token');
+    });
 
-    // app.post('/account/token/revoke', middlewares.requireLogin, function(req) {
-    //     req.io.route('account:revoke_token');
-    // });
+    app.post('/account/token/revoke', middlewares.requireLogin, function(req) {
+        req.io.route('account:revoke_token');
+    });
 
     //
     // Sockets
@@ -203,55 +203,55 @@ module.exports = function() {
         //         });
         //     });
         // },
-        // generate_token: function(req, res) {
-        //     if (req.user.usingToken) {
-        //         return res.status(403).json({
-        //             status: 'error',
-        //             message: 'Cannot generate a new token ' +
-        //                      'when using token authentication.'
-        //         });
-        //     }
+        generate_token: function(req, res) {
+            if (req.user.usingToken) {
+                return res.status(403).json({
+                    status: 'error',
+                    message: 'Cannot generate a new token ' +
+                             'when using token authentication.'
+                });
+            }
 
-        //     core.account.generateToken(req.user._id, function (err, token) {
-        //         if (err) {
-        //             return res.json({
-        //                 status: 'error',
-        //                 message: 'Unable to generate a token.',
-        //                 errors: err
-        //             });
-        //         }
+            core.account.generateToken(req.user._id, function (err, token) {
+                if (err) {
+                    return res.json({
+                        status: 'error',
+                        message: 'Unable to generate a token.',
+                        errors: err
+                    });
+                }
 
-        //         res.json({
-        //             status: 'success',
-        //             message: 'Token generated.',
-        //             token: token
-        //         });
-        //     });
-        // },
-        // revoke_token: function(req, res) {
-        //     if (req.user.usingToken) {
-        //         return res.status(403).json({
-        //             status: 'error',
-        //             message: 'Cannot revoke token ' +
-        //                      'when using token authentication.'
-        //         });
-        //     }
+                res.json({
+                    status: 'success',
+                    message: 'Token generated.',
+                    token: token
+                });
+            });
+        },
+        revoke_token: function(req, res) {
+            if (req.user.usingToken) {
+                return res.status(403).json({
+                    status: 'error',
+                    message: 'Cannot revoke token ' +
+                             'when using token authentication.'
+                });
+            }
 
-        //     core.account.revokeToken(req.user._id, function (err) {
-        //         if (err) {
-        //             return res.json({
-        //                 status: 'error',
-        //                 message: 'Unable to revoke token.',
-        //                 errors: err
-        //             });
-        //         }
+            core.account.revokeToken(req.user._id, function (err) {
+                if (err) {
+                    return res.json({
+                        status: 'error',
+                        message: 'Unable to revoke token.',
+                        errors: err
+                    });
+                }
 
-        //         res.json({
-        //             status: 'success',
-        //             message: 'Token revoked.'
-        //         });
-        //     });
-        // },
+                res.json({
+                    status: 'success',
+                    message: 'Token revoked.'
+                });
+            });
+        },
         applogin: function(req, res) {
         var User = mongoose.model('User');
         User.findOne({ email: req.body.username }, function(err, user) {
