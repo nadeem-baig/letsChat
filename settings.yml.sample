@@ -38,3 +38,7 @@ auth:
   providers: [local]
   local:
     enableRegistration: true
+private:
+  enable: true
+  roster: online # online / all
+  expire: false 

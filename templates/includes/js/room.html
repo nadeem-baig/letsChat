@@ -4,6 +4,10 @@
             <div class="lcb-room-meta">
                 <div class="lcb-room-meta-text">
                     <h2 class="lcb-room-heading">
+                        <a class="btn btn-action hidden-xs" title="Home" aria-label="Home" href="/" >
+                            <i class="fa fa-home fa-2x"></i>
+                        </a>
+
                         <span class="slug">#{{slug}}</span>
                         {{#if hasPassword}}
                             <span class="fa fa-lock btn password" title="<$ __('This room requires password to enter') $>" aria-label="<$ __('This room requires password to enter') $>"></span>
@@ -14,12 +18,12 @@
             </div>
             <div class="lcb-room-header-actions">
                 <div class="btn-group">
-                    {{#if iCanEdit}}
+                    <!-- {{#if iCanEdit}}
                         <a class="btn btn-action hidden-xs show-edit-room"
                             title="<$ __('Edit Room') $>" aria-label="<$ __('Edit Room') $>">
                             <i class="fa fa-edit"></i>
                         </a>
-                    {{/if}}
+                    {{/if}} -->
                     <a class="btn btn-action hidden-xs" title="<$ __('Chat History') $>" aria-label="<$ __('Chat History') $>"
                         href="./transcript?room={{ id }}" target="_blank">
                         <i class="fa fa-history"></i>

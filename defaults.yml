@@ -31,6 +31,7 @@ xmpp:
     cert: ./server.crt
 
 database:
+  # uri: mongodb://216.10.250.210/letschat
   uri: mongodb://localhost/letschat
 
 secrets:
@@ -39,8 +40,8 @@ secrets:
 files:
   enable: true
   provider: local
-  maxFileSize: 100000000
-  restrictTypes: true
+  maxFileSize: 1000000000
+  restrictTypes: false
   allowedTypes:
     - 'image/jpeg'
     - 'image/png'

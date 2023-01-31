@@ -4,6 +4,10 @@
   "description": "A chat app for small teams.",
   "license": "MIT",
   "main": "app.js",
+  "nodemonConfig": {
+    "ignore": [],
+    "delay": 2500
+  },
   "scripts": {
     "grunt": "grunt",
     "start": "node app.js",
