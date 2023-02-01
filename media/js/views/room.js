@@ -6,6 +6,17 @@
 'use strict';
 
 +function(window, $, _) {
+    const isValidUrl = urlString =>{
+        var inputElement = document.createElement('input');
+        inputElement.type = 'url';
+        inputElement.value = urlString;
+  
+        if (!inputElement.checkValidity()) {
+          return false;
+        } else {
+          return true;
+        }
+      } 
 
     window.LCB = window.LCB || {};
 
@@ -347,7 +358,7 @@
             this.scrollMessages();
         },
         addMessage: function(message) {
-            // console.log(message.owner.id,"message.owner.id -->11122");
+            // console.log(message,"message.owner.id -->11122");
 
             // Smells like pasta
             message.paste = /\n/i.test(message.text);
@@ -363,16 +374,15 @@
 
             // WHATS MY NAME
             message.mentioned = new RegExp('\\B@(' + this.client.user.get('username') + '|all)(?!@)\\b', 'i').test(message.text);
-
+        
             // Templatin' time
             var $html = $(this.messageTemplate(message).trim());
             var $text = $html.find('.lcb-message-text');
-
             var that = this;
             this.formatMessage($text.html(), function(text) {
-                $text.html(text);
-                $html.find('time').updateTimeStamp();
-                that.$messages.append($html);
+                    $text.html(text);
+                    $html.find('time').updateTimeStamp();
+                    that.$messages.append($html);
 
                 if (!message.fragment) {
                     that.lastMessagePosted = posted;
@@ -392,9 +402,13 @@
                         replacements: replacements,
                         rooms: client.rooms
                     };
-
                     var msg = window.utils.message.format(text, data);
-                    cb(msg);
+                    if (isValidUrl(text)) {
+                    cb(`<a href='${msg.toString().split('"')[1]}' target='_blank'>${decodeURIComponent(msg.toString().split('"')[1].split("/")[msg.toString().split('"')[1].split("/").length-1])}</a>`);
+                   }
+                    else{
+                        cb(msg);
+                        } 
                 });
             });
         },

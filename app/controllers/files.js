@@ -29,8 +29,8 @@ module.exports = function() {
 
     var fileUpload = multer({
         limits: {
-            files: 1,
-            fileSize: settings.maxFileSize
+            files: 5,
+            // fileSize: settings.maxFileSize
         },
         storage: multer.diskStorage({})
     }).any();

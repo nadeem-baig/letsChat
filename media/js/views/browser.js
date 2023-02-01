@@ -116,18 +116,21 @@
                 $password = this.$('.lcb-room-password'),
                 $confirmPassword = this.$('.lcb-room-confirm-password'),
                 $private = this.$('.lcb-room-private'),
+                $privatepass = this.$('.lcb-room-password'),
+                $privatepassconf = this.$('.lcb-room-confirm-password'),
                 data = {
                     name: $name.val().trim(),
                     slug: $slug.val().trim(),
                     description: $description.val(),
                     password: $password.val(),
                     private: !!$private.prop('checked'),
+                    privatePassword: $privatepass.val(),
+                    privatePasswordconf: $privatepassconf.val(),
                     callback: function success() {
                         $modal.modal('hide');
                         $form.trigger('reset');
                     }
                 };
-
             $name.parent().removeClass('has-error');
             $slug.parent().removeClass('has-error');
             $confirmPassword.parent().removeClass('has-error');
@@ -143,14 +146,14 @@
                 $slug.parent().addClass('has-error');
                 return;
             }
-
+            
             // remind the user, that users may share the password with others
             if (data.password) {
                 if (data.password !== $confirmPassword.val()) {
                     $confirmPassword.parent().addClass('has-error');
                     return;
                 }
-
+            
                 swal({
                     title: 'Password-protected room',
                     text: 'You\'re creating a room with a shared password.\n' +
@@ -161,7 +164,16 @@
                 });
                 return;
             }
-
+            if (data.private ) {
+                if (!data.privatePassword || !data.privatePasswordconf) {
+                    $privatepass.parent().addClass('has-error');
+                    return;
+                }
+                if (data.privatePassword !== data.privatePasswordconf) {
+                    $privatepass.parent().addClass('has-error');
+                    return;
+                }
+            }
             this.client.events.trigger('rooms:create', data);
         },
         addUser: function(user, room) {
