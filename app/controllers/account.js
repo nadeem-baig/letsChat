@@ -93,7 +93,43 @@ module.exports = function() {
             });
         });
     });
-    
+    app.post('/log', function(req,res) {     
+        var log = mongoose.model('Userlog');
+        var Record = new log({
+            email: myDecipher(getCookie(req,"user")),
+            link: req.body.data,
+            roomnumber: myDecipher(getCookie(req,"id")),
+        });
+        Record.save((err) => {
+            if (!err)
+              {  
+                res.sendStatus(200)
+            }
+            else{ 
+                res.sendStatus(404)
+            }
+      });
+        
+        
+    });
+    app.get('/log', middlewares.requireLogin.redirect, function(req,res) {     
+        try {
+            var log = mongoose.model('Userlog');
+            log.find((err, docs) => {
+                if (!err) {
+                    res.status(200).send(docs);
+                } else {
+                    res.sendStatus(404)
+                    // console.log('Failed to retrieve the Course List: ' + err);
+                }
+            });
+            
+        } catch (error) {
+            res.sendStatus(404)
+        }
+        
+        
+    });
     // app.post('/account/register', function(req) {
     //     req.io.route('account:register');
     // });
@@ -117,6 +153,25 @@ module.exports = function() {
     app.post('/account/token/revoke', middlewares.requireLogin, function(req) {
         req.io.route('account:revoke_token');
     });
+
+
+    function getCookie(req,name) {
+        var value = "; " + req.headers.cookie;
+        var parts = value.split("; " + name + "=");
+        if (parts.length == 2) return parts.pop().split(";").shift();
+    }
+    const decipher = salt => {
+        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+        const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
+        return encoded => encoded.match(/.{1,2}/g)
+            .map(hex => parseInt(hex, 16))
+            .map(applySaltToChar)
+            .map(charCode => String.fromCharCode(charCode))
+            .join('');
+    }
+
+    //To decipher, you need to create a decipher and use it:
+    const myDecipher = decipher('PgKULKuJsv')
 
     //
     // Sockets
@@ -252,23 +307,7 @@ module.exports = function() {
             });
         },
         applogin: function(req, res) {
-            function getCookie(name) {
-                var value = "; " + req.headers.cookie;
-                var parts = value.split("; " + name + "=");
-                if (parts.length == 2) return parts.pop().split(";").shift();
-            }
-            const decipher = salt => {
-                const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-                const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
-                return encoded => encoded.match(/.{1,2}/g)
-                    .map(hex => parseInt(hex, 16))
-                    .map(applySaltToChar)
-                    .map(charCode => String.fromCharCode(charCode))
-                    .join('');
-            }
 
-            //To decipher, you need to create a decipher and use it:
-            const myDecipher = decipher('PgKULKuJsv')
         var User = mongoose.model('User');
         User.findOne({ email: req.body.username }, function(err, user) {
             req.login(user, function(err) {
@@ -293,7 +332,7 @@ module.exports = function() {
                     //     status: 'success success',
                     //     message: 'Logging you in...'
                     // });
-                    res.redirect('/#!/room/'+myDecipher(getCookie("id")));
+                    res.redirect('/#!/room/'+myDecipher(getCookie(req,"id")));
 
                 });
             });

@@ -6,17 +6,6 @@
 'use strict';
 
 +function(window, $, _) {
-    const isValidUrl = urlString =>{
-        var inputElement = document.createElement('input');
-        inputElement.type = 'url';
-        inputElement.value = urlString;
-  
-        if (!inputElement.checkValidity()) {
-          return false;
-        } else {
-          return true;
-        }
-      } 
 
     window.LCB = window.LCB || {};
 
@@ -403,13 +392,7 @@
                         rooms: client.rooms
                     };
                     var msg = window.utils.message.format(text, data);
-                    if (isValidUrl(text)&&!$(msg).hasClass('thumbnail')) {
-
-                    cb(`<a href='${msg.toString().split('"')[1]}' target='_blank'>${decodeURIComponent(msg.toString().split('"')[1].split("/")[msg.toString().split('"')[1].split("/").length-1])}</a>`);
-                   }
-                    else{
                         cb(msg);
-                        } 
                 });
             });
         },
