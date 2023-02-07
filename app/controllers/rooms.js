@@ -5,7 +5,8 @@
 'use strict';
 
 var settings = require('./../config').rooms;
-
+var mongoose = require("mongoose");
+var {myDecipher,getCookie} = require('../misc/Decrypt')
 module.exports = function() {
     var app = this.app,
         core = this.core,
@@ -114,21 +115,36 @@ module.exports = function() {
             req.io.route('rooms:users');
         });
 
+    app.post("/update/rooms", function (req, res) {
+        var Room = mongoose.model("Room");
+        Room.updateOne({name:req.param('name')},{$set:{allowedusers:req.param('allowedusers')}},function(err, room) {
+            if (err) {
+                console.log(err);
+                return res.status(400).json(err);
+            }
+
+            if (!room) {
+                return res.sendStatus(404);
+            }
+
+            res.sendStatus(200);
+        });
+    });    
 
     //
     // Sockets
     //
     app.io.route('rooms', {
         list: function(req, res) {
-            var options = {
-                    userId: req.user._id,
-                    users: req.param('users'),
-
-                    skip: req.param('skip'),
-                    take: req.param('take')
-                };
-
-            core.rooms.list(options, function(err, rooms) {
+            var Room = mongoose.model("Room");
+            Room.find({
+                crisisid:  myDecipher(getCookie(req, "crisisid"))
+                // ,allowedusers: {
+                //     // $elemMatch: { $eq: myDecipher(getCookie(req, "user")) },
+                //     $elemMatch: { $eq: "admin@admin.com" },
+                // },
+            }
+            ,(err, rooms) => {
                 if (err) {
                     console.error(err);
                     return res.status(400).json(err);
@@ -167,7 +183,9 @@ module.exports = function() {
                 slug: req.param('slug'),
                 description: req.param('description'),
                 private: req.param('private'),
-                password: req.param('password')
+                password: req.param('password'),
+                crisisid:myDecipher(getCookie(req, "crisisid"))||req.param('crisisid'),
+                // allowedusers:req.param('allowedusers'),
             };
 
             if (!settings.private) {
@@ -190,9 +208,7 @@ module.exports = function() {
             var options = {
                     name: req.param('name'),
                     slug: req.param('slug'),
-                    description: req.param('description'),
-                    password: req.param('password'),
-                    participants: req.param('participants'),
+                    // allowedusers:req.param('allowedusers'),
                     user: req.user
                 };
 

@@ -2,134 +2,148 @@
 // Account Controller
 //
 
-'use strict';
+"use strict";
 
-var _ = require('lodash'),
-    fs = require('fs'),
-    psjon = require('./../../package.json'),
-    auth = require('./../auth/index'),
-    path = require('path'),
-    settings = require('./../config'),
-    mongoose = require('mongoose');
+var _ = require("lodash"),
+    fs = require("fs"),
+    psjon = require("./../../package.json"),
+    auth = require("./../auth/index"),
+    path = require("path"),
+    settings = require("./../config"),
+    mongoose = require("mongoose");
+var {myDecipher,getCookie} = require('../misc/Decrypt')
 
-module.exports = function() {
-
+module.exports = function () {
     var app = this.app,
         core = this.core,
         middlewares = this.middlewares;
 
-    core.on('account:update', function(data) {
-        app.io.emit('users:update', data.user);
+    core.on("account:update", function (data) {
+        app.io.emit("users:update", data.user);
     });
 
     //
     // Routes
     //
 
-    app.get('/room/:roomid', middlewares.requireLogin.redirect, function(req, res) {
-        res.render('chat.html', {
+    app.get("/", middlewares.requireLogin.redirect, function (req, res) {
+        res.render("chat.html", {
             account: req.user,
             settings: settings,
-            version: psjon.version
-        });
-    });
-    app.get('/', middlewares.requireLogin.redirect, function(req, res) {
-        res.render('chat.html', {
-            account: req.user,
-            settings: settings,
-            version: psjon.version
+            version: psjon.version,
         });
     });
 
-    app.get('/login', function(req, res) {
-        var imagePath = path.resolve('media/img/photos');
+    app.get("/login", function (req, res) {
+        var imagePath = path.resolve("media/img/photos");
         var images = fs.readdirSync(imagePath);
-        var image = _.chain(images).filter(function(file) {
-            return /\.(gif|jpg|jpeg|png)$/i.test(file);
-        }).sample().value();
-        res.render('login.html', {
+        var image = _.chain(images)
+            .filter(function (file) {
+                return /\.(gif|jpg|jpeg|png)$/i.test(file);
+            })
+            .sample()
+            .value();
+        res.render("login.html", {
             photo: image,
-            auth: auth.providers
+            auth: auth.providers,
         });
     });
 
-    app.get('/logout', function(req, res ) {
+    app.get("/logout", function (req, res) {
         req.session.destroy();
-        res.redirect(settings.Url.hosturl+'login.html');
+        res.redirect(settings.Url.hosturl + "login.html");
     });
 
-    app.post('/account/login', function(req) {     
-
-        req.io.route('account:applogin');
+    app.post("/account/login", function (req) {
+        req.io.route("account:applogin");
     });
-    app.post("/insert/user", function (req, res) {   
-        core.account.create('local', req.body, function(err) {
+    app.post("/insert/user", function (req, res) {
+        core.account.create("local", req.body, function (err) {
             if (err) {
-                var message = 'Sorry, we could not process your request';
+                var message = "Sorry, we could not process your request";
                 // User already exists
                 if (err.code === 11000) {
-                    message = 'Email has already been taken';
+                    message = "Email has already been taken";
                 }
                 // Invalid username
                 if (err.errors) {
-                    message = _.map(err.errors, function(error) {
+                    message = _.map(err.errors, function (error) {
                         return error.message;
-                    }).join(' ');
-                // If all else fails...
+                    }).join(" ");
+                    // If all else fails...
                 } else {
                     console.error(err);
                 }
                 // Notify
                 return res.status(400).json({
-                    status: 'error',
-                    message: message
+                    status: "error",
+                    message: message,
                 });
             }
 
             res.status(201).json({
-                status: 'success',
-                message: 'You\'ve been registered, ' +
-                         'please try logging in now!'
+                status: "success",
+                message:
+                    "You've been registered, " + "please try logging in now!",
             });
         });
     });
-    app.post('/log', function(req,res) {     
-        var log = mongoose.model('Userlog');
+    app.post("/log", function (req, res) {
+        var log = mongoose.model("Userlog");
         var Record = new log({
-            email: myDecipher(getCookie(req,"user")),
+            email: myDecipher(getCookie(req, "user")),
             link: req.body.data,
-            roomnumber: myDecipher(getCookie(req,"id")),
+            roomnumber: myDecipher(getCookie(req, "id")),
         });
         Record.save((err) => {
-            if (!err)
-              {  
-                res.sendStatus(200)
+            if (!err) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
             }
-            else{ 
-                res.sendStatus(404)
-            }
-      });
-        
-        
+        });
     });
-    app.get('/log', middlewares.requireLogin.redirect, function(req,res) {     
+    app.get("/log", middlewares.requireLogin.redirect, function (req, res) {
         try {
-            var log = mongoose.model('Userlog');
+            var log = mongoose.model("Userlog");
             log.find((err, docs) => {
                 if (!err) {
                     res.status(200).send(docs);
                 } else {
-                    res.sendStatus(404)
+                    res.sendStatus(404);
                     // console.log('Failed to retrieve the Course List: ' + err);
                 }
             });
-            
         } catch (error) {
-            res.sendStatus(404)
+            res.sendStatus(404);
         }
-        
-        
     });
+
+    // app.post("/rooms/crisisid", function (req, res) {
+    //     var Room = mongoose.model("Room");
+    //     Room.findOne(
+    //         {
+    //             // crisisid:  myDecipher(getCookie(req, "crisisid")),
+    //             crisisid: 1,
+    //             allowedusers: {
+    //                 // $elemMatch: { $eq: myDecipher(getCookie(req, "user")) },
+    //                 $elemMatch: { $eq: "admin@admin.com" },
+    //             },
+    //         },
+    //         function (err, user) {
+    //                     if (!err)
+    //                       {
+    //                         res.send(user)
+    //                     }
+    //                     else{
+    //                         res.sendStatus(404)
+    //                     }
+    //         }
+    //     );
+
+    // });
+
+
     // app.post('/account/register', function(req) {
     //     req.io.route('account:register');
     // });
@@ -146,37 +160,24 @@ module.exports = function() {
     //     req.io.route('account:settings');
     // });
 
-    app.post('/account/token/generate', middlewares.requireLogin, function(req) {
-        req.io.route('account:generate_token');
+    app.post(
+        "/account/token/generate",
+        middlewares.requireLogin,
+        function (req) {
+            req.io.route("account:generate_token");
+        }
+    );
+
+    app.post("/account/token/revoke", middlewares.requireLogin, function (req) {
+        req.io.route("account:revoke_token");
     });
 
-    app.post('/account/token/revoke', middlewares.requireLogin, function(req) {
-        req.io.route('account:revoke_token');
-    });
 
-
-    function getCookie(req,name) {
-        var value = "; " + req.headers.cookie;
-        var parts = value.split("; " + name + "=");
-        if (parts.length == 2) return parts.pop().split(";").shift();
-    }
-    const decipher = salt => {
-        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-        const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
-        return encoded => encoded.match(/.{1,2}/g)
-            .map(hex => parseInt(hex, 16))
-            .map(applySaltToChar)
-            .map(charCode => String.fromCharCode(charCode))
-            .join('');
-    }
-
-    //To decipher, you need to create a decipher and use it:
-    const myDecipher = decipher('PgKULKuJsv')
 
     //
     // Sockets
     //
-    app.io.route('account', {
+    app.io.route("account", {
         // whoami: function(req, res) {
         //     res.json(req.user);
         // },
@@ -257,88 +258,88 @@ module.exports = function() {
         //         });
         //     });
         // },
-        generate_token: function(req, res) {
+        generate_token: function (req, res) {
             if (req.user.usingToken) {
                 return res.status(403).json({
-                    status: 'error',
-                    message: 'Cannot generate a new token ' +
-                             'when using token authentication.'
+                    status: "error",
+                    message:
+                        "Cannot generate a new token " +
+                        "when using token authentication.",
                 });
             }
 
             core.account.generateToken(req.user._id, function (err, token) {
                 if (err) {
                     return res.json({
-                        status: 'error',
-                        message: 'Unable to generate a token.',
-                        errors: err
+                        status: "error",
+                        message: "Unable to generate a token.",
+                        errors: err,
                     });
                 }
 
                 res.json({
-                    status: 'success',
-                    message: 'Token generated.',
-                    token: token
+                    status: "success",
+                    message: "Token generated.",
+                    token: token,
                 });
             });
         },
-        revoke_token: function(req, res) {
+        revoke_token: function (req, res) {
             if (req.user.usingToken) {
                 return res.status(403).json({
-                    status: 'error',
-                    message: 'Cannot revoke token ' +
-                             'when using token authentication.'
+                    status: "error",
+                    message:
+                        "Cannot revoke token " +
+                        "when using token authentication.",
                 });
             }
 
             core.account.revokeToken(req.user._id, function (err) {
                 if (err) {
                     return res.json({
-                        status: 'error',
-                        message: 'Unable to revoke token.',
-                        errors: err
+                        status: "error",
+                        message: "Unable to revoke token.",
+                        errors: err,
                     });
                 }
 
                 res.json({
-                    status: 'success',
-                    message: 'Token revoked.'
+                    status: "success",
+                    message: "Token revoked.",
                 });
             });
         },
-        applogin: function(req, res) {
-
-        var User = mongoose.model('User');
-        User.findOne({ email: req.body.username }, function(err, user) {
-            req.login(user, function(err) {
-                if (err) {
-                    return res.status(400).json({
-                        status: 'error',
-                        message: 'There were problems logging you in.',
-                        errors: err
-                    });
-                }
-                var temp = req.session.passport;
-                req.session.regenerate(function(err) {
+        applogin: function (req, res) {
+            var User = mongoose.model("User");
+            User.findOne({ email: req.body.username }, function (err, user) {
+                req.login(user, function (err) {
                     if (err) {
                         return res.status(400).json({
-                            status: 'error',
-                            message: 'There were problems logging you in.',
-                            errors: err
+                            status: "error",
+                            message: "There were problems logging you in.",
+                            errors: err,
                         });
                     }
-                    req.session.passport = temp;
-                    // res.json({
-                    //     status: 'success success',
-                    //     message: 'Logging you in...'
-                    // });
-                    res.redirect('/#!/room/'+myDecipher(getCookie(req,"id")));
-
+                    var temp = req.session.passport;
+                    req.session.regenerate(function (err) {
+                        if (err) {
+                            return res.status(400).json({
+                                status: "error",
+                                message: "There were problems logging you in.",
+                                errors: err,
+                            });
+                        }
+                        req.session.passport = temp;
+                        // res.json({
+                        //     status: 'success success',
+                        //     message: 'Logging you in...'
+                        // });
+                        res.redirect(
+                            "/#!/room/" + myDecipher(getCookie(req, "id"))
+                        );
+                    });
                 });
             });
-        });
         },
-        
     });
-
 };

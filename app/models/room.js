@@ -28,6 +28,13 @@ var RoomSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    crisisid: {
+        type: String,
+        required: true
+    },
+    allowedusers: {
+        type: Array,
+    },
     description: {
         type: String,
         trim: true
