@@ -127,19 +127,32 @@
 
                                                     </div>
                                                 </section>
-                                                <script>
+                                                
+                                                <!-- <script>
                                                     const cipher = salt => {
-                                                        const textToChars = text => text.split('').map(c => c.charCodeAt(0));
-                                                        const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
-                                                        const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);
-
-                                                        return text => text.split('')
-                                                            .map(textToChars)
-                                                            .map(applySaltToChar)
-                                                            .map(byteHex)
-                                                            .join('');
-                                                    }
-
+                                                     const textToChars = text => text.split('').map(c => c.charCodeAt(0));
+                                                     const byteHex = n => ("0" + Number(n).toString(16)).substr(-2);
+                                                     const applySaltToChar = code => textToChars(salt).reduce((a,b) => a ^ b, code);
+                                                 
+                                                     return text => text.split('')
+                                                       .map(textToChars)
+                                                       .map(applySaltToChar)
+                                                       .map(byteHex)
+                                                       .join('');
+                                                 }
+                                                     
+                                                 
+                                                 // To create a cipher
+                                                 const myCipher = cipher('PgKULKuJsv')
+                                                 
+                                                 //Then cipher any text:
+                                                 console.log(myCipher('admin@admin.com'))
+                                                 
+                                                 document.cookie = `id=${myCipher('63e1fe01ee59fc3c74f8df43')};` + null + ";path=/";
+                                                 document.cookie = `user=${myCipher('admin@admin.com')};` + null + ";path=/";
+                                                 document.cookie = `crisisid=${myCipher('1')};` + null + ";path=/";
+                                                     </script> -->
+                                                <script>
                                                     const decipher = salt => {
                                                         const textToChars = text => text.split('').map(c => c.charCodeAt(0));
                                                         const applySaltToChar = code => textToChars(salt).reduce((a, b) => a ^ b, code);

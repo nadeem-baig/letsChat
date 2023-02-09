@@ -96,7 +96,8 @@ function uuidv4() {
         var id = uuidv4()
         if (imagePattern.test(text)) {
             return text.replace(imagePattern, function(url) {
-                var uri = encodeEntities(_.unescape(url));
+                var uri = encodeEntities(_.unescape(url)).replace("/transcript", "");
+
                 return '<a class="thumbnail" id = "'+id+'" href="' + uri +'" src="' + uri +'" target="_blank" rel="noreferrer nofollow"><img src="' + uri +'" alt="Pasted Image"  onload="'+myFunction(id)+'" /></a>';
             });
         } else {

@@ -115,21 +115,21 @@ module.exports = function() {
             req.io.route('rooms:users');
         });
 
-    app.post("/update/rooms", function (req, res) {
-        var Room = mongoose.model("Room");
-        Room.updateOne({name:req.param('name')},{$set:{allowedusers:req.param('allowedusers')}},function(err, room) {
-            if (err) {
-                console.log(err);
-                return res.status(400).json(err);
-            }
+    // app.post("/update/rooms", function (req, res) {
+    //     var Room = mongoose.model("Room");
+    //     Room.updateOne({name:req.param('name')},{$set:{allowedusers:req.param('allowedusers')}},function(err, room) {
+    //         if (err) {
+    //             // console.log(err);
+    //             return res.status(400).json(err);
+    //         }
 
-            if (!room) {
-                return res.sendStatus(404);
-            }
+    //         if (!room) {
+    //             return res.sendStatus(404);
+    //         }
 
-            res.sendStatus(200);
-        });
-    });    
+    //         res.sendStatus(200);
+    //     });
+    // });    
 
     //
     // Sockets
@@ -184,7 +184,7 @@ module.exports = function() {
                 description: req.param('description'),
                 private: req.param('private'),
                 password: req.param('password'),
-                crisisid:myDecipher(getCookie(req, "crisisid"))||req.param('crisisid'),
+                crisisid:req.param('crisisid')||myDecipher(getCookie(req, "crisisid")),
                 // allowedusers:req.param('allowedusers'),
             };
 
