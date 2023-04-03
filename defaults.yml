@@ -33,6 +33,7 @@ xmpp:
 database:
   # uri: mongodb://216.10.250.210/letschat
   uri: mongodb://localhost/letschat
+  # uri: "mongodb://Admin:letschat@localhost:27039/letschat?authSource=admin"
 
 secrets:
   cookie: secretsauce
@@ -94,3 +95,7 @@ i18n:
 
 Url:
   hosturl:"https://uvtechzone.com/audit/"
+
+UserInsert:
+  "http://216.10.250.210/audit/"
+

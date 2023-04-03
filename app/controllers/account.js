@@ -50,8 +50,13 @@ module.exports = function () {
     });
 
     app.get("/logout", function (req, res) {
-        req.session.destroy();
-        res.redirect(settings.Url.hosturl + "login.html");
+        req.logOut();
+        res.status(200).clearCookie('connect.sid', {
+          path: '/'
+        });
+        req.session.destroy(function (err) {
+          res.redirect('/');
+        });
     });
 
     app.post("/account/login", function (req) {

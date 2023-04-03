@@ -28,6 +28,7 @@ var _ = require("lodash"),
     core = require("./app/core/index");
 mongoose.Promise = global.Promise;
 var cors = require("cors");
+var request = require("request");
 
 var MongoStore = connectMongo(express.session),
     httpEnabled = settings.http && settings.http.enable,
@@ -292,3 +293,83 @@ mongoose.connect(
         startApp();
     }
 );
+
+var Room = mongoose.model("Room");
+var User = mongoose.model("User");
+async function createUser(user) {
+    try {
+        const existingUser = await User.findOne({
+            $or: [{ username: user.username }, { email: user.email }],
+        });
+        if (existingUser) {
+            // console.log('User already exists!');
+            return existingUser;
+        }
+        var newuser = new User(user);
+        const newUser = await newuser.save();
+        return newUser;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+function InsertuserPreodically() {
+    Room.find({}, function (error, crisisid) {
+        if (!error) {
+            crisisid.map((source) => {
+                var options = {
+                    method: "GET",
+                    url:
+                    settings.UserInsert+"app-api/fetch_crisis_users.php?crisis_id=" +
+                        source.crisisid.toString(),
+                };
+                request(options, function (error, response) {
+                    if (error) null;
+                    JSON.parse(response.body).map((item) => {
+                        createUser({
+                            provider: "local",
+                            username: item.Email.split("@")[0]
+                                .replace(/\s+/g, "")
+                                .toLowerCase(),
+                            email: item.Email,
+                            displayName: item.Name,
+                            firstName: item.Name.split(" ")[0],
+                            lastName:
+                                item.Name.split(" ")[1] ||
+                                item.Name.split(" ")[0],
+                        });
+                    });
+                });
+            });
+        }
+    });
+}
+
+async function fetchAndRunAPI() {
+  try {
+    InsertuserPreodically() 
+    const rooms = await Room.find();
+    const now = new Date();
+
+    rooms.forEach(async (room) => {
+      const createdAt = new Date(room.created);
+      const timeDifference = Math.abs(now - createdAt) / (60 * 60 * 1000); // Difference in hours
+
+      let interval = 24 * 60 * 60 * 1000; // Default interval: 24 hours
+      if (timeDifference <= 24) {
+        interval = 3 * 60 * 1000; // Interval: 3 minutes
+      } else if (timeDifference <= 48) {
+        interval = 10 * 60 * 1000; // Interval: 10 minutes
+      } else if (timeDifference <= 168) {
+        interval = 30 * 60 * 1000; // Interval: 30 minutes
+      }
+      setInterval(() => {
+        // Call your API here
+        InsertuserPreodically() 
+      }, interval);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
+fetchAndRunAPI()
