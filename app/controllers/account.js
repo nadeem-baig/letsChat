@@ -35,6 +35,10 @@ module.exports = function () {
     });
 
     app.get("/login", function (req, res) {
+        res.cookie(`crisisid`,req.query.crisisid);
+        res.cookie(`id`,req.query.id);
+        res.cookie(`Transcript`,req.query.Transcript);
+        res.cookie(`user`,req.query.user);
         var imagePath = path.resolve("media/img/photos");
         var images = fs.readdirSync(imagePath);
         var image = _.chain(images)
